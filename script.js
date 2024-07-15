@@ -1,9 +1,12 @@
 document.addEventListener("DOMContentLoaded", function() {
     const tagListElement = document.getElementById('tag-list');
+    const pageListElement = document.getElementById('page-list');
+    const tagInput = document.getElementById('tag-input');
+    const filterButton = document.getElementById('filter-button');
     const tags = new Set();
     const pages = [
-        { title: "記事1", url: "article1.html", contentUrl: "article1-content.html", tags: ["タグ1", "タグ2"] },
-        { title: "記事2", url: "article2.html", contentUrl: "article2-content.html", tags: ["タグ3", "タグ4"] },
+        { title: "記事1", url: "template.html?article=article1.html", contentUrl: "article1-content.html", tags: ["タグ1", "タグ2"] },
+        { title: "記事2", url: "template.html?article=article2.html", contentUrl: "article2-content.html", tags: ["タグ3", "タグ4"] },
         // 他のページもここに追加
     ];
 
@@ -25,21 +28,26 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // タグクリック時にページを表示する関数
     function displayPagesByTag(tag) {
-        const pageListElement = document.getElementById('page-list');
-        if (pageListElement) {
-            pageListElement.innerHTML = ''; // ページリストをクリア
-            pages
-                .filter(page => page.tags.includes(tag))
-                .forEach(page => {
-                    const li = document.createElement('li');
-                    const a = document.createElement('a');
-                    a.href = `template.html?article=${page.url}`;
-                    a.textContent = page.title;
-                    li.appendChild(a);
-                    pageListElement.appendChild(li);
-                });
-        }
+        pageListElement.innerHTML = ''; // ページリストをクリア
+        pages
+            .filter(page => page.tags.includes(tag))
+            .forEach(page => {
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.href = page.url;
+                a.textContent = page.title;
+                li.appendChild(a);
+                pageListElement.appendChild(li);
+            });
     }
+
+    // 絞り込みボタンがクリックされたときの動作
+    filterButton.addEventListener('click', () => {
+        const filterTag = tagInput.value.trim();
+        if (filterTag) {
+            displayPagesByTag(filterTag);
+        }
+    });
 
     // ページロード時に記事の内容を挿入する関数
     function loadArticleContent(contentUrl) {
@@ -55,7 +63,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const urlParams = new URLSearchParams(window.location.search);
     const article = urlParams.get('article');
     if (article) {
-        const page = pages.find(p => p.url === article);
+        const page = pages.find(p => p.url.includes(article));
         if (page) {
             loadArticleContent(page.contentUrl);
         }
