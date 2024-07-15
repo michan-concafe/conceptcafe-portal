@@ -4,8 +4,8 @@ document.addEventListener("DOMContentLoaded", function() {
     const searchButton = document.getElementById('search-button');
     const tags = new Set();
     const pages = [
-        { title: "記事1", url: "template.html?article=article1.html", contentUrl: "article1-content.html", tags: ["タグ1", "タグ2"] },
-        { title: "記事2", url: "template.html?article=article2.html", contentUrl: "article2-content.html", tags: ["タグ3", "タグ4"] },
+        { title: "D𝐨𝐥𝐥𝐲♡𝐏𝐫𝐢𝐧𝐜𝐞𝐬𝐬", url: "template.html?article=article1.html", contentUrl: "article1-content.html", tags: ["コンカフェ", "研修あり", "週1～OK", "交通費支給"] },
+        { title: "記事2のタイトル", url: "template.html?article=article2.html", contentUrl: "article2-content.html", tags: ["タグ3", "タグ4"] },
         // 他のページもここに追加
     ];
 
