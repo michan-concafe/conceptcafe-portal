@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 .forEach(page => {
                     const li = document.createElement('li');
                     const a = document.createElement('a');
-                    a.href = page.url;
+                    a.href = `template.html?article=${page.url}`;
                     a.textContent = page.title;
                     li.appendChild(a);
                     pageListElement.appendChild(li);
@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const urlParams = new URLSearchParams(window.location.search);
     const article = urlParams.get('article');
     if (article) {
-        const page = pages.find(p => p.url.includes(article));
+        const page = pages.find(p => p.url === article);
         if (page) {
             loadArticleContent(page.contentUrl);
         }
