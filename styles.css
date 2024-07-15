@@ -1,28 +1,63 @@
 /* styles.css */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Comic Sans MS', cursive, sans-serif; /* 可愛らしいフォントを選択 */
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background-color: #fce4ec; /* 淡いピンク色の背景色 */
+    background-image: url('path/to/your/yumekawa-background.png'); /* ゆめかわ風の背景画像 */
+    background-size: cover;
+    background-attachment: fixed;
+    color: #555;
 }
 
-header {
-    background-color: #333;
+.header {
+    background-color: rgba(255, 182, 193, 0.8); /* パステルピンク色 */
     color: #fff;
-    padding: 10px 0;
+    padding: 20px 0;
     text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-main {
+.main {
     padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8); /* 半透明の白色背景 */
+    margin: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-footer {
-    background-color: #333;
+.footer {
+    background-color: rgba(255, 182, 193, 0.8); /* パステルピンク色 */
     color: #fff;
     text-align: center;
     padding: 10px 0;
     position: fixed;
     width: 100%;
     bottom: 0;
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* パステルカラーのリンク */
+a {
+    color: #ff69b4;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* その他の装飾 */
+h1, p {
+    margin: 0;
+    padding: 10px 0;
+}
+
+p {
+    font-size: 1.2em;
+}
+
+h1 {
+    font-size: 2.5em;
+    text-shadow: 2px 2px #ffb6c1;
 }
