@@ -1,19 +1,41 @@
 document.addEventListener("DOMContentLoaded", function() {
     const tagListElement = document.getElementById('tag-list');
+    const pageListElement = document.getElementById('page-list');
     const tags = new Set();
+    const pages = [
+        { title: "記事1", url: "article1.html", tags: ["タグ1", "タグ2"] },
+        { title: "記事2", url: "article2.html", tags: ["タグ3", "タグ4"] },
+        // 他のページもここに追加
+    ];
 
-    // 各ページのタグ要素を取得
-    document.querySelectorAll('.tags span').forEach(tagElement => {
-        tags.add(tagElement.getAttribute('data-tag'));
+    // ページからタグを収集
+    pages.forEach(page => {
+        page.tags.forEach(tag => tags.add(tag));
     });
 
-    // タグのリストを作成
+    // タグリストを生成
     tags.forEach(tag => {
         const li = document.createElement('li');
         const a = document.createElement('a');
-        a.href = '#'; // 必要に応じてリンクを設定
+        a.href = '#';
         a.textContent = tag;
+        a.addEventListener('click', () => displayPagesByTag(tag));
         li.appendChild(a);
         tagListElement.appendChild(li);
     });
+
+    // タグクリック時にページを表示する関数
+    function displayPagesByTag(tag) {
+        pageListElement.innerHTML = ''; // ページリストをクリア
+        pages
+            .filter(page => page.tags.includes(tag))
+            .forEach(page => {
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.href = page.url;
+                a.textContent = page.title;
+                li.appendChild(a);
+                pageListElement.appendChild(li);
+            });
+    }
 });
