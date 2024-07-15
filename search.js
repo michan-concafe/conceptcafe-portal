@@ -4,8 +4,8 @@ document.addEventListener("DOMContentLoaded", function() {
     const searchButton = document.getElementById('search-button');
     const tags = new Set();
     const pages = [
-        { title: "記事1", url: "template.html?article=article1.html", tags: ["タグ1", "タグ2"] },
-        { title: "記事2", url: "template.html?article=article2.html", tags: ["タグ3", "タグ4"] },
+        { title: "記事1", url: "template.html?article=article1.html", contentUrl: "article1-content.html", tags: ["タグ1", "タグ2"] },
+        { title: "記事2", url: "template.html?article=article2.html", contentUrl: "article2-content.html", tags: ["タグ3", "タグ4"] },
         // 他のページもここに追加
     ];
 
@@ -34,12 +34,31 @@ document.addEventListener("DOMContentLoaded", function() {
             pages
                 .filter(page => selectedTags.every(tag => page.tags.includes(tag)))
                 .forEach(page => {
-                    const li = document.createElement('li');
-                    const a = document.createElement('a');
-                    a.href = page.url;
-                    a.textContent = page.title;
-                    li.appendChild(a);
-                    searchResultsElement.appendChild(li);
+                    fetch(page.contentUrl)
+                        .then(response => response.text())
+                        .then(html => {
+                            const doc = new DOMParser().parseFromString(html, 'text/html');
+                            const articleTitle = doc.querySelector('article h2').textContent;
+                            const articleFirstImage = doc.querySelector('article img');
+                            const articleFirstParagraph = doc.querySelector('article p').textContent.slice(0, 100) + '...';
+                            
+                            const li = document.createElement('li');
+                            const a = document.createElement('a');
+                            a.href = page.url;
+                            a.textContent = articleTitle;
+                            li.appendChild(a);
+                            if (articleFirstImage) {
+                                const img = document.createElement('img');
+                                img.src = articleFirstImage.src;
+                                img.alt = articleFirstImage.alt;
+                                li.appendChild(img);
+                            }
+                            const p = document.createElement('p');
+                            p.textContent = articleFirstParagraph;
+                            li.appendChild(p);
+                            searchResultsElement.appendChild(li);
+                        })
+                        .catch(error => console.error('Error fetching article content:', error));
                 });
         } else {
             // タグが選択されていない場合のメッセージ
