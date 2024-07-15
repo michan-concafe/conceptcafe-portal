@@ -3,56 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>記事ページ</title>
+    <title>ゆめかわウェブサイト</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header class="header">
-        <h1>記事ページ</h1>
+        <h1>ゆめかわウェブサイトへようこそ！</h1>
     </header>
     <div class="content-wrapper">
-        <aside class="sidebar-left">
+        <aside class="left-sidebar">
             <h2>日付一覧</h2>
-            <!-- 日付一覧の内容 -->
+            <ul class="date-list">
+                <li>2024-01-01</li>
+                <li>2024-02-14</li>
+                <li>2024-03-21</li>
+                <li>2024-04-30</li>
+                <li>2024-05-15</li>
+            </ul>
         </aside>
-        <main class="main">
-            <div id="article-content">
-                <!-- ここに記事コンテンツが読み込まれる -->
-            </div>
+        <main class="main" id="article-content">
+            <!-- ここに記事の内容が動的に挿入されます -->
         </main>
-        <aside class="sidebar-right">
+        <aside class="sidebar">
             <h2>タグ一覧</h2>
-            <!-- タグ一覧の内容 -->
+            <ul class="tag-list" id="tag-list">
+                <!-- タグのリストがJavaScriptによって動的に追加されます -->
+            </ul>
         </aside>
     </div>
     <footer class="footer">
         <p>© 2024 あなたの名前</p>
     </footer>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const params = new URLSearchParams(window.location.search);
-            const articleFile = params.get('article');
-            if (articleFile) {
-                fetch(articleFile)
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-                        return response.text();
-                    })
-                    .then(html => {
-                        const articleContent = document.getElementById('article-content');
-                        const doc = new DOMParser().parseFromString(html, 'text/html');
-                        articleContent.innerHTML = doc.body.innerHTML;
-                    })
-                    .catch(error => {
-                        console.error('Error loading article:', error);
-                        document.getElementById('article-content').textContent = '記事が見つかりませんでした。';
-                    });
-            } else {
-                document.getElementById('article-content').textContent = '記事が見つかりませんでした。';
-            }
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
