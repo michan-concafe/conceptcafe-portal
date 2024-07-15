@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>記事1 - ゆめかわウェブサイト</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <h1>記事1のタイトル</h1>
+    </header>
+    <div class="content-wrapper">
+        <aside class="left-sidebar">
+            <h2>日付一覧</h2>
+            <ul class="date-list">
+                <li>2024-01-01</li>
+                <li>2024-02-14</li>
+                <li>2024-03-21</li>
+                <li>2024-04-30</li>
+                <li>2024-05-15</li>
+            </ul>
+        </aside>
+        <main class="main">
+            <article>
+                <h2>記事1の内容</h2>
+                <p>ここに記事の内容を追加します。</p>
+                <p class="tags">タグ: <span data-tag="タグ1">タグ1</span>, <span data-tag="タグ2">タグ2</span></p>
+            </article>
+        </main>
+        <aside class="sidebar">
+            <h2>タグ一覧</h2>
+            <ul class="tag-list" id="tag-list">
+                <!-- タグのリストがJavaScriptによって動的に追加されます -->
+            </ul>
+        </aside>
+    </div>
+    <footer class="footer">
+        <p>© 2024 あなたの名前</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
