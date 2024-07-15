@@ -22,6 +22,15 @@ body {
     display: flex;
 }
 
+.left-sidebar {
+    width: 250px; /* 左サイドバーの幅 */
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8); /* 半透明の白色背景 */
+    margin: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
 .main {
     flex: 1;
     padding: 20px;
@@ -32,7 +41,7 @@ body {
 }
 
 .sidebar {
-    width: 300px;
+    width: 300px; /* 右サイドバーの幅 */
     padding: 20px;
     background-color: rgba(255, 255, 255, 0.8); /* 半透明の白色背景 */
     margin: 20px;
@@ -79,6 +88,25 @@ a {
 
 a:hover {
     text-decoration: underline;
+}
+
+/* 日付リストのスタイル */
+.date-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.date-list li {
+    margin: 10px 0;
+    background-color: #ffb6c1; /* 日付リストの背景色 */
+    color: #fff; /* 日付リストの文字色 */
+    padding: 5px 10px; /* 日付リストのパディング */
+    border-radius: 5px; /* 日付リストの角丸 */
+    transition: background-color 0.3s ease; /* ホバー時の効果 */
+}
+
+.date-list li:hover {
+    background-color: #ff69b4; /* ホバー時の色 */
 }
 
 /* タグリストのスタイル */
