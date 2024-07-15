@@ -1,10 +1,9 @@
 document.addEventListener("DOMContentLoaded", function() {
     const tagListElement = document.getElementById('tag-list');
-    const pageListElement = document.getElementById('page-list');
     const tags = new Set();
     const pages = [
-        { title: "記事1", url: "article1.html", tags: ["タグ1", "タグ2"] },
-        { title: "記事2", url: "article2.html", tags: ["タグ3", "タグ4"] },
+        { title: "記事1", url: "article1.html", contentUrl: "article1-content.html", tags: ["タグ1", "タグ2"] },
+        { title: "記事2", url: "article2.html", contentUrl: "article2-content.html", tags: ["タグ3", "タグ4"] },
         // 他のページもここに追加
     ];
 
@@ -26,16 +25,39 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // タグクリック時にページを表示する関数
     function displayPagesByTag(tag) {
-        pageListElement.innerHTML = ''; // ページリストをクリア
-        pages
-            .filter(page => page.tags.includes(tag))
-            .forEach(page => {
-                const li = document.createElement('li');
-                const a = document.createElement('a');
-                a.href = page.url;
-                a.textContent = page.title;
-                li.appendChild(a);
-                pageListElement.appendChild(li);
-            });
+        const pageListElement = document.getElementById('page-list');
+        if (pageListElement) {
+            pageListElement.innerHTML = ''; // ページリストをクリア
+            pages
+                .filter(page => page.tags.includes(tag))
+                .forEach(page => {
+                    const li = document.createElement('li');
+                    const a = document.createElement('a');
+                    a.href = page.url;
+                    a.textContent = page.title;
+                    li.appendChild(a);
+                    pageListElement.appendChild(li);
+                });
+        }
+    }
+
+    // ページロード時に記事の内容を挿入する関数
+    function loadArticleContent(contentUrl) {
+        fetch(contentUrl)
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('article-content').innerHTML = html;
+            })
+            .catch(error => console.error('Error loading article content:', error));
+    }
+
+    // 現在のURLから記事のコンテンツを読み込む
+    const urlParams = new URLSearchParams(window.location.search);
+    const article = urlParams.get('article');
+    if (article) {
+        const page = pages.find(p => p.url.includes(article));
+        if (page) {
+            loadArticleContent(page.contentUrl);
+        }
     }
 });
