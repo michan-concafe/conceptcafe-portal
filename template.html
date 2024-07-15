@@ -34,13 +34,21 @@
             const articleFile = params.get('article');
             if (articleFile) {
                 fetch(articleFile)
-                    .then(response => response.text())
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.text();
+                    })
                     .then(html => {
                         const articleContent = document.getElementById('article-content');
                         const doc = new DOMParser().parseFromString(html, 'text/html');
                         articleContent.innerHTML = doc.body.innerHTML;
                     })
-                    .catch(error => console.error('Error loading article:', error));
+                    .catch(error => {
+                        console.error('Error loading article:', error);
+                        document.getElementById('article-content').textContent = '記事が見つかりませんでした。';
+                    });
             } else {
                 document.getElementById('article-content').textContent = '記事が見つかりませんでした。';
             }
