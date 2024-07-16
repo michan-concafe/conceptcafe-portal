@@ -8,7 +8,7 @@
 </head>
 <body>
     <header class="header">
-        <h1>ホームページ</h1>
+        <h1><a href="index.html" class="site-name">ホームページ</a></h1>
     </header>
     <div class="content-wrapper">
         <aside class="sidebar-left">
@@ -40,34 +40,11 @@
         <p>© 2024 あなたの名前</p>
     </footer>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const tagList = document.getElementById('tag-list');
-
-            // タグリストのリンクにクリックイベントを追加
-            tagList.addEventListener('click', function(event) {
-                event.preventDefault();
-
-                // クリックされたタグのデータ属性を取得
-                const tag = event.target.dataset.tag;
-                if (!tag) return;
-
-                // タグに対応する記事一覧を取得して表示
-                fetch(`tag-${tag}.html`)
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-                        return response.text();
-                    })
-                    .then(html => {
-                        const articleContent = document.getElementById('article-content');
-                        articleContent.innerHTML = html;
-                    })
-                    .catch(error => {
-                        console.error('Error loading tag page:', error);
-                        document.getElementById('article-content').textContent = '該当する記事が見つかりませんでした。';
-                    });
-            });
+        // ヘッダーのサイト名をクリックした際の挙動
+        const siteNameLink = document.querySelector('.site-name');
+        siteNameLink.addEventListener('click', function(event) {
+            event.preventDefault(); // デフォルトのリンク先移動を防ぐ
+            window.location.href = 'index.html'; // トップページに遷移
         });
     </script>
 </body>
