@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>記事ページ</title>
+    <title>ホームページ</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -56,9 +56,9 @@
                         const articleContent = document.getElementById('article-content');
                         const doc = new DOMParser().parseFromString(html, 'text/html');
                         
-                        // タイトルとコンテンツを設定
+                        // ページ名の表示を1回にする
                         const articleTitle = doc.querySelector('h2').textContent;
-                        document.getElementById('article-title').textContent = articleTitle;
+                        document.title = articleTitle;
                         articleContent.innerHTML = doc.body.innerHTML;
                     })
                     .catch(error => {
