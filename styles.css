@@ -1,70 +1,39 @@
-/* 全体のスタイル */
+/* 全体の背景色とフォント */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    margin: 0;
-    padding: 0;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: #f9e6ff; /* 淡い紫色の背景 */
+    color: #333; /* テキストの色 */
 }
 
-/* ヘッダー、フッター */
+/* ヘッダーとフッター */
 .header, .footer {
-    background-color: #ffccff;
+    background-color: #ffccff; /* ピンクの背景 */
     padding: 20px;
     text-align: center;
 }
 
-.header h1, .footer p {
-    margin: 0;
-}
-
-/* コンテンツラッパー */
-.content-wrapper {
-    display: flex;
-    justify-content: space-between;
+/* メインコンテンツとサイドバー */
+.main, .sidebar-left, .sidebar-right {
+    background-color: #fff; /* 白色の背景 */
+    border-radius: 10px; /* 角丸 */
     padding: 20px;
+    margin-bottom: 20px; /* 下の余白 */
 }
 
-/* メインコンテンツ */
-.main {
-    background-color: #fff;
-    border-radius: 15px;
-    padding: 20px;
-    width: 60%;
-}
-
-/* サイドバー共通のスタイル */
-.sidebar-left, .sidebar-right {
-    background-color: #fff;
-    border-radius: 15px;
-    padding: 20px;
-    width: 15%;
-}
-
-/* サイドバーの内容 */
+/* サイドバーのタイトル */
 .sidebar-left h2, .sidebar-right h2 {
     margin-top: 0;
+    font-size: 1.2em; /* タイトルのフォントサイズを調整 */
 }
 
-/* フッター */
-.footer {
-    background-color: #ffccff;
-    padding: 10px;
-    text-align: center;
-    position: relative;
-    bottom: 0;
-    width: 100%;
-}
-
-.sidebar-left ul, .sidebar-right ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-.sidebar-left li, .sidebar-right li {
-    padding: 5px 0;
-}
-
+/* サイドバーのリンク */
 .sidebar-left a, .sidebar-right a {
     text-decoration: none;
-    color: #ff69b4;
+    color: #ff69b4; /* ピンクのリンク色 */
+}
+
+/* フッターのコピーライト */
+.footer p {
+    margin: 0;
+    color: #666; /* フッターテキストの色 */
 }
