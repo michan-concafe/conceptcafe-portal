@@ -3,43 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ゆめかわウェブサイト</title>
+    <title>ホームページ</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header class="header">
-        <h1>ゆめかわウェブサイトへようこそ！</h1>
+        <h1>ホームページ</h1>
     </header>
     <div class="content-wrapper">
-        <aside class="left-sidebar">
+        <aside class="sidebar-left">
             <h2>日付一覧</h2>
-            <ul class="date-list">
-                <li>2024-01-01</li>
-                <li>2024-02-14</li>
-                <li>2024-03-21</li>
-                <li>2024-04-30</li>
-                <li>2024-05-15</li>
-            </ul>
+            <!-- 日付一覧の内容 -->
         </aside>
         <main class="main">
-            <h2>コンテンツ</h2>
-            <p>ここにコンテンツを追加します。</p>
-            <p><a href="template.html?article=article1.html">記事1</a></p>
-            <p><a href="template.html?article=article2.html">記事2</a></p>
-            <h2>タグでフィルタリングされたページ</h2>
-            <ul id="page-list"></ul>
-            <p><a href="search.html">タグ検索ページ</a></p>
-        </main>
-        <aside class="sidebar">
-            <h2>タグ一覧</h2>
-            <ul class="tag-list" id="tag-list">
-                <!-- タグのリストがJavaScriptによって動的に追加されます -->
+            <h2>記事一覧</h2>
+            <ul>
+                <li><a href="template.html?article=article1-content.html">D𝐨𝐥𝐥𝐲♡𝐏𝐫𝐢𝐧𝐜𝐞𝐬𝐬</a></li>
+                <li><a href="template.html?article=article2-content.html">記事2のタイトル</a></li>
+                <!-- 他の記事へのリンク -->
             </ul>
+        </main>
+        <aside class="sidebar-right">
+            <h2>タグ一覧</h2>
+            <!-- タグ一覧の内容 -->
         </aside>
     </div>
     <footer class="footer">
         <p>© 2024 あなたの名前</p>
     </footer>
-    <script src="script.js"></script>
 </body>
 </html>
