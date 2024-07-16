@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="page-title">記事ページ</title>
+    <title>記事ページ</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header class="header">
-        <h1 id="article-title">記事ページ</h1>
+        <h1>ホームページ</h1>
     </header>
     <div class="content-wrapper">
         <aside class="sidebar-left">
@@ -21,6 +21,7 @@
             </ul>
         </aside>
         <main class="main">
+            <h2 id="article-title">記事ページ</h2>
             <div id="article-content">
                 <!-- ここに記事コンテンツが読み込まれる -->
             </div>
@@ -31,45 +32,4 @@
                 <li><a href="template.html?tag=コンカフェ">コンカフェ</a></li>
                 <li><a href="template.html?tag=研修あり">研修あり</a></li>
                 <li><a href="template.html?tag=週1～OK">週1～OK</a></li>
-                <li><a href="template.html?tag=交通費支給">交通費支給</a></li>
-                <!-- 他のタグ -->
-            </ul>
-        </aside>
-    </div>
-    <footer class="footer">
-        <p>© 2024 あなたの名前</p>
-    </footer>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const params = new URLSearchParams(window.location.search);
-            let articleFile = params.get('article');
-
-            if (articleFile) {
-                fetch(articleFile)
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-                        return response.text();
-                    })
-                    .then(html => {
-                        const articleContent = document.getElementById('article-content');
-                        const doc = new DOMParser().parseFromString(html, 'text/html');
-                        
-                        // タイトルとコンテンツを設定
-                        const articleTitle = doc.querySelector('h2').textContent;
-                        document.getElementById('page-title').textContent = articleTitle;
-                        document.getElementById('article-title').textContent = articleTitle;
-                        articleContent.innerHTML = doc.body.innerHTML;
-                    })
-                    .catch(error => {
-                        console.error('Error loading article:', error);
-                        document.getElementById('article-content').textContent = '記事が見つかりませんでした。';
-                    });
-            } else {
-                document.getElementById('article-content').textContent = '記事が見つかりませんでした。';
-            }
-        });
-    </script>
-</body>
-</html>
+                <li><a href="template.html?tag=交通費支給">交通費支給</a></
