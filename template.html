@@ -34,7 +34,7 @@
             let articleFile = params.get('article');
 
             if (articleFile) {
-                // ファイル名を変換（例: article1.html -> article1-content.html）
+                // article1.html -> article1-content.htmlに変換
                 articleFile = articleFile.replace('.html', '-content.html');
                 
                 fetch(articleFile)
