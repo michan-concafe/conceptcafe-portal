@@ -31,8 +31,12 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const params = new URLSearchParams(window.location.search);
-            const articleFile = params.get('article');
+            let articleFile = params.get('article');
+
             if (articleFile) {
+                // ファイル名を変換（例: article1.html -> article1-content.html）
+                articleFile = articleFile.replace('.html', '-content.html');
+                
                 fetch(articleFile)
                     .then(response => {
                         if (!response.ok) {
