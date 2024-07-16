@@ -57,7 +57,7 @@
                         const doc = new DOMParser().parseFromString(html, 'text/html');
                         
                         // ページ名の表示を1回にする
-                        const articleTitle = doc.querySelector('h2').textContent;
+                        const articleTitle = doc.querySelector('h2') ? doc.querySelector('h2').textContent : "ホームページ";
                         document.title = articleTitle;
                         articleContent.innerHTML = doc.body.innerHTML;
                     })
