@@ -1,13 +1,14 @@
 /* 全体の背景色とフォント */
 body {
     font-family: 'Helvetica Neue', Arial, sans-serif;
-    background-color: #f9e6ff; /* 淡い紫色の背景 */
+    background-color: #f0f0f0; /* ライトグレーの背景 */
     color: #333; /* テキストの色 */
 }
 
 /* ヘッダーとフッター */
 .header, .footer {
-    background-color: #ffccff; /* ピンクの背景 */
+    background-color: #333; /* ダークグレーの背景 */
+    color: #fff; /* テキストの色 */
     padding: 20px;
     text-align: center;
 }
@@ -15,7 +16,7 @@ body {
 /* メインコンテンツとサイドバー */
 .main, .sidebar-left, .sidebar-right {
     background-color: #fff; /* 白色の背景 */
-    border-radius: 10px; /* 角丸 */
+    border-radius: 5px; /* 角丸 */
     padding: 20px;
     margin-bottom: 20px; /* 下の余白 */
 }
@@ -23,17 +24,16 @@ body {
 /* サイドバーのタイトル */
 .sidebar-left h2, .sidebar-right h2 {
     margin-top: 0;
-    font-size: 1.2em; /* タイトルのフォントサイズを調整 */
 }
 
 /* サイドバーのリンク */
 .sidebar-left a, .sidebar-right a {
     text-decoration: none;
-    color: #ff69b4; /* ピンクのリンク色 */
+    color: #007bff; /* リンクの色 */
 }
 
 /* フッターのコピーライト */
 .footer p {
     margin: 0;
-    color: #666; /* フッターテキストの色 */
+    color: #ccc; /* フッターテキストの色 */
 }
