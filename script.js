@@ -1,71 +1,84 @@
 document.addEventListener("DOMContentLoaded", function() {
-    const tagListElement = document.getElementById('tag-list');
-    const pageListElement = document.getElementById('page-list');
-    const tagInput = document.getElementById('tag-input');
-    const filterButton = document.getElementById('filter-button');
-    const tags = new Set();
-    const pages = [
-        { title: "記事1", url: "template.html?article=article1.html", contentUrl: "article1-content.html", tags: ["タグ1", "タグ2"] },
-        { title: "記事2", url: "template.html?article=article2.html", contentUrl: "article2-content.html", tags: ["タグ3", "タグ4"] },
-        // 他のページもここに追加
-    ];
+    const params = new URLSearchParams(window.location.search);
+    let articleFile = params.get('article');
 
-    // ページからタグを収集
-    pages.forEach(page => {
-        page.tags.forEach(tag => tags.add(tag));
-    });
+    if (articleFile) {
+        fetch(articleFile)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(html => {
+                const articleContent = document.getElementById('article-content');
+                const doc = new DOMParser().parseFromString(html, 'text/html');
 
-    // タグリストを生成
-    tags.forEach(tag => {
-        const li = document.createElement('li');
-        const a = document.createElement('a');
-        a.href = '#';
-        a.textContent = tag;
-        a.addEventListener('click', () => displayPagesByTag(tag));
-        li.appendChild(a);
-        tagListElement.appendChild(li);
-    });
-
-    // タグクリック時にページを表示する関数
-    function displayPagesByTag(tag) {
-        pageListElement.innerHTML = ''; // ページリストをクリア
-        pages
-            .filter(page => page.tags.includes(tag))
-            .forEach(page => {
-                const li = document.createElement('li');
-                const a = document.createElement('a');
-                a.href = page.url;
-                a.textContent = page.title;
-                li.appendChild(a);
-                pageListElement.appendChild(li);
+                // ページ名の表示を1回にする
+                const titleElement = doc.querySelector('h2');
+                if (titleElement) {
+                    document.title = titleElement.textContent;
+                    titleElement.remove();
+                }
+                articleContent.innerHTML = doc.body.innerHTML;
+            })
+            .catch(error => {
+                console.error('Error loading article:', error);
+                document.getElementById('article-content').textContent = '記事が読み込まれませんでした。';
             });
     }
 
-    // 絞り込みボタンがクリックされたときの動作
-    filterButton.addEventListener('click', () => {
-        const filterTag = tagInput.value.trim();
-        if (filterTag) {
-            displayPagesByTag(filterTag);
-        }
+    // タグリストのリンクにクリックイベントを追加
+    const tagList = document.getElementById('tag-list');
+    tagList.addEventListener('click', function(event) {
+        event.preventDefault();
+
+        // クリックされたタグのデータ属性を取得
+        const tag = event.target.dataset.tag;
+        if (!tag) return;
+
+        // タグに対応する記事一覧を取得して表示
+        fetch(`tag-${tag}.html`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(html => {
+                const articleContent = document.getElementById('article-content');
+                articleContent.innerHTML = html;
+            })
+            .catch(error => {
+                console.error('Error loading tag page:', error);
+                document.getElementById('article-content').textContent = '該当する記事が見つかりませんでした。';
+            });
     });
 
-    // ページロード時に記事の内容を挿入する関数
-    function loadArticleContent(contentUrl) {
-        fetch(contentUrl)
-            .then(response => response.text())
-            .then(html => {
-                document.getElementById('article-content').innerHTML = html;
+    // 検索ボタンのクリックイベントを追加
+    const searchButton = document.getElementById('search-button');
+    searchButton.addEventListener('click', function() {
+        const query = document.getElementById('search-box').value.toLowerCase();
+        fetch('articles.json')
+            .then(response => response.json())
+            .then(articles => {
+                const searchResults = document.getElementById('search-results');
+                searchResults.innerHTML = '';
+                articles.forEach(article => {
+                    if (article.title.toLowerCase().includes(query) || article.content.toLowerCase().includes(query)) {
+                        const li = document.createElement('li');
+                        li.innerHTML = `
+                            <a href="template.html?article=${article.file}">
+                                <h3>${article.title}</h3>
+                                <img src="${article.image}" alt="${article.title}" style="width: 100px; height: 100px;">
+                                <p>${article.content.substring(0, 100)}...</p>
+                            </a>`;
+                        searchResults.appendChild(li);
+                    }
+                });
             })
-            .catch(error => console.error('Error loading article content:', error));
-    }
-
-    // 現在のURLから記事のコンテンツを読み込む
-    const urlParams = new URLSearchParams(window.location.search);
-    const article = urlParams.get('article');
-    if (article) {
-        const page = pages.find(p => p.url.includes(article));
-        if (page) {
-            loadArticleContent(page.contentUrl);
-        }
-    }
+            .catch(error => {
+                console.error('Error fetching articles:', error);
+            });
+    });
 });
