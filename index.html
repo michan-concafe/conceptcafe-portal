@@ -8,7 +8,7 @@
 </head>
 <body>
     <header class="header">
-        <h1>ホームページ</h1>
+        <h1><a href="index.html" class="site-name">ホームページ</a></h1>
     </header>
     <div class="content-wrapper">
         <aside class="sidebar-left">
@@ -21,26 +21,100 @@
             </ul>
         </aside>
         <main class="main">
-            <h2>記事一覧</h2>
-            <ul>
-                <li><a href="template.html?article=article1-content.html">D𝐨𝐥𝐥𝐲♡𝐏𝐫𝐢𝐧𝐜𝐞𝐬𝐬</a></li>
-                <li><a href="template.html?article=article2-content.html">記事2のタイトル</a></li>
-                <!-- 他の記事へのリンク -->
-            </ul>
+            <div id="article-content">
+                <!-- ここにindex-content.htmlが読み込まれる -->
+            </div>
         </main>
         <aside class="sidebar-right">
             <h2>タグ一覧</h2>
-            <ul>
-                <li><a href="template.html?tag=コンカフェ">コンカフェ</a></li>
-                <li><a href="template.html?tag=研修あり">研修あり</a></li>
-                <li><a href="template.html?tag=週1～OK">週1～OK</a></li>
-                <li><a href="template.html?tag=交通費支給">交通費支給</a></li>
+            <ul id="tag-list">
+                <li><a href="#" data-tag="コンカフェ">コンカフェ</a></li>
+                <li><a href="#" data-tag="研修あり">研修あり</a></li>
+                <li><a href="#" data-tag="週1～OK">週1～OK</a></li>
+                <li><a href="#" data-tag="交通費支給">交通費支給</a></li>
                 <!-- 他のタグ -->
+            </ul>
+            <h2>検索</h2>
+            <div id="search">
+                <input type="text" id="search-box" placeholder="検索...">
+                <button id="search-button">検索</button>
+            </div>
+            <ul id="search-results">
+                <!-- 検索結果がここに表示されます -->
             </ul>
         </aside>
     </div>
     <footer class="footer">
         <p>© 2024 あなたの名前</p>
     </footer>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // index-content.htmlを読み込む
+            fetch('index-content.html')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
+                .then(html => {
+                    const articleContent = document.getElementById('article-content');
+                    articleContent.innerHTML = html;
+                })
+                .catch(error => {
+                    console.error('Error loading index content:', error);
+                    document.getElementById('article-content').textContent = 'コンテンツが読み込まれませんでした。';
+                });
+
+            // タグリストのリンクにクリックイベントを追加
+            const tagList = document.getElementById('tag-list');
+            tagList.addEventListener('click', function(event) {
+                event.preventDefault();
+
+                // クリックされたタグのデータ属性を取得
+                const tag = event.target.dataset.tag;
+                if (!tag) return;
+
+                // タグに対応する記事一覧を取得して表示
+                fetch(`tag-${tag}.html`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.text();
+                    })
+                    .then(html => {
+                        const articleContent = document.getElementById('article-content');
+                        articleContent.innerHTML = html;
+                    })
+                    .catch(error => {
+                        console.error('Error loading tag page:', error);
+                        document.getElementById('article-content').textContent = '該当する記事が見つかりませんでした。';
+                    });
+            });
+
+            // 検索ボタンのクリックイベントを追加
+            const searchButton = document.getElementById('search-button');
+            searchButton.addEventListener('click', function() {
+                const query = document.getElementById('search-box').value.toLowerCase();
+                fetch('articles.json')
+                    .then(response => response.json())
+                    .then(articles => {
+                        const searchResults = document.getElementById('search-results');
+                        searchResults.innerHTML = '';
+                        articles.forEach(article => {
+                            if (article.title.toLowerCase().includes(query) || article.content.toLowerCase().includes(query)) {
+                                const li = document.createElement('li');
+                                li.innerHTML = `<a href="template.html?article=${article.file}">${article.title}</a>`;
+                                searchResults.appendChild(li);
+                            }
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error fetching articles:', error);
+                    });
+            });
+        });
+    </script>
 </body>
 </html>
