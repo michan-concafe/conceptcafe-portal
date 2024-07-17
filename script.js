@@ -57,28 +57,50 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // 検索ボタンのクリックイベントを追加
     const searchButton = document.getElementById('search-button');
-    searchButton.addEventListener('click', function() {
-        const query = document.getElementById('search-box').value.toLowerCase();
-        fetch('articles.json')
-            .then(response => response.json())
-            .then(articles => {
-                const searchResults = document.getElementById('search-results');
-                searchResults.innerHTML = '';
-                articles.forEach(article => {
-                    if (article.title.toLowerCase().includes(query) || article.content.toLowerCase().includes(query)) {
-                        const li = document.createElement('li');
-                        li.innerHTML = `
-                            <a href="template.html?article=${article.file}">
-                                <h3>${article.title}</h3>
-                                <img src="${article.image}" alt="${article.title}" style="width: 100px; height: 100px;">
-                                <p>${article.content.substring(0, 100)}...</p>
-                            </a>`;
-                        searchResults.appendChild(li);
-                    }
+    if (searchButton) {
+        searchButton.addEventListener('click', function() {
+            const query = document.getElementById('search-box').value.toLowerCase();
+            fetch('articles.json')
+                .then(response => response.json())
+                .then(articles => {
+                    const searchResults = document.getElementById('search-results');
+                    searchResults.innerHTML = '';
+                    articles.forEach(article => {
+                        if (article.title.toLowerCase().includes(query) || article.content.toLowerCase().includes(query)) {
+                            const li = document.createElement('li');
+                            li.innerHTML = `
+                                <a href="template.html?article=${article.file}">
+                                    <h3>${article.title}</h3>
+                                    <img src="${article.image}" alt="${article.title}" style="width: 100px; height: 100px;">
+                                    <p>${article.content.substring(0, 100)}...</p>
+                                </a>`;
+                            searchResults.appendChild(li);
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching articles:', error);
                 });
-            })
-            .catch(error => {
-                console.error('Error fetching articles:', error);
-            });
-    });
+        });
+    }
+    
+    // タグチェックボックスの追加
+    const tags = ['コンカフェ', '研修あり', '週1～OK', '交通費支給'];
+    const tagCheckboxes = document.getElementById('tag-checkboxes');
+    if (tagCheckboxes) {
+        tags.forEach(tag => {
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.id = `tag-${tag}`;
+            checkbox.value = tag;
+
+            const label = document.createElement('label');
+            label.htmlFor = `tag-${tag}`;
+            label.textContent = tag;
+
+            tagCheckboxes.appendChild(checkbox);
+            tagCheckboxes.appendChild(label);
+            tagCheckboxes.appendChild(document.createElement('br'));
+        });
+    }
 });
