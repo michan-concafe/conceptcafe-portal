@@ -22,7 +22,7 @@
         </aside>
         <main class="main">
             <div id="article-content">
-                <!-- ここにindex-content.htmlが読み込まれる -->
+                <!-- ここに記事コンテンツが読み込まれる -->
             </div>
         </main>
         <aside class="sidebar-right">
@@ -49,22 +49,33 @@
     </footer>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // index-content.htmlを読み込む
-            fetch('index-content.html')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.text();
-                })
-                .then(html => {
-                    const articleContent = document.getElementById('article-content');
-                    articleContent.innerHTML = html;
-                })
-                .catch(error => {
-                    console.error('Error loading index content:', error);
-                    document.getElementById('article-content').textContent = 'コンテンツが読み込まれませんでした。';
-                });
+            const params = new URLSearchParams(window.location.search);
+            let articleFile = params.get('article');
+
+            if (articleFile) {
+                fetch(articleFile)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.text();
+                    })
+                    .then(html => {
+                        const articleContent = document.getElementById('article-content');
+                        const doc = new DOMParser().parseFromString(html, 'text/html');
+                        
+                        // ページ名の表示を1回にする
+                        const articleTitle = doc.querySelector('h2') ? doc.querySelector('h2').textContent : "ホームページ";
+                        document.title = articleTitle;
+                        articleContent.innerHTML = doc.body.innerHTML;
+                    })
+                    .catch(error => {
+                        console.error('Error loading article:', error);
+                        document.getElementById('article-content').textContent = '記事が見つかりませんでした。';
+                    });
+            } else {
+                document.getElementById('article-content').textContent = '記事が見つかりませんでした。';
+            }
 
             // タグリストのリンクにクリックイベントを追加
             const tagList = document.getElementById('tag-list');
